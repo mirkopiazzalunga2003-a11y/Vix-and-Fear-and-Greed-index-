@@ -1,0 +1,68 @@
+//@version=6
+indicator(title = 'Fear & Greed Index', shorttitle = 'CNN fear and greed', overlay = false, precision = 0)
+
+//Safe Haven Demand:
+shd1 = request.security('SPX', 'D', (close - close[20]) / close * 100)
+shd2 = request.security('ZB1!', 'D', (close - close[20]) / close * 100)
+shd = shd1 - shd2
+
+//Stock Price Breadth:
+spb1 = request.security('USI:UVOL', 'D', close)
+spb2 = request.security('USI:DVOL', 'D', close)
+spb3 = spb1 - spb2
+ema19 = ta.ema(spb3, 19)
+ema39 = ta.ema(spb3, 39)
+osci = ema19 - ema39
+spb = ta.cum(osci)
+
+//Market Momentum:
+mm1 = request.security('SPX', 'D', close)
+mm2 = request.security('SPX', 'D', ta.sma(close, 125))
+mm = (mm1 - mm2) / mm1 * 100
+
+//Stock Price Strenth:
+sps1 = request.security('MAHN', 'D', ta.ema(close, 5))
+sps2 = request.security('MALN', 'D', ta.ema(close, 5))
+sps = ta.ema((sps1 - sps2) / (sps1 + sps2) * 100, 10)
+
+//Put and Call Options:
+pco = request.security('USI:PCC', 'D', ta.sma(close, 5))
+
+//Junk Bond Demand
+jbd = request.security('BAMLH0A0HYM2', 'D', close)
+
+//Market Volatility:
+mv1 = request.security('VIX', 'D', close)
+mv2 = request.security('VIX', 'D', ta.sma(close, 50))
+mv = (mv1 - mv2) / mv1 * 100
+
+//Merge:
+ind_shd = ta.percentrank(shd, 252)
+
+ind_spb = ta.percentrank(spb, 252)
+
+ind_mm = ta.percentrank(mm, 252)
+//ind_mm = 100 * (mm - lowest(mm, 252)) / (highest(mm, 252) - lowest(mm, 252))
+
+ind_sps = ta.percentrank(sps, 252)
+//ind_sps = 100 * (sps - lowest(sps, 252)) / (highest(sps, 252) - lowest(sps, 252))
+
+ind_pco = 100 - ta.percentrank(pco, 252)
+
+ind_jbd = 100 - ta.percentrank(jbd, 252)
+
+ind_mv = 100 - ta.percentrank(mv, 252)
+
+geo_fg = math.pow((ind_shd +1)*(ind_spb +1)*(ind_mm +1)*(ind_sps +1)*(ind_pco +1)*(ind_jbd +1)*(ind_mv+1),1/7)
+// fg = (ind_shd + ind_spb + ind_mm + ind_sps + ind_pco + ind_jbd + ind_mv) / 7
+plot(geo_fg, linewidth = 2, color = color.new(color.black, 0))
+plot(ind_shd, color = color.new(#00FF00, 0), linewidth = 1, title = 'Safe Haven Demand')
+plot(ind_spb, color = color.new(#aa00ff, 0), linewidth = 1, title = 'Stock Price Breadth')
+plot(ind_mm, color = color.new(#97971b, 0), linewidth = 1, title = 'Market Momentum')
+plot(ind_sps, color = color.new(#FF8800, 0), linewidth = 1, title = 'Stock Price Strength')
+plot(ind_pco, color = color.new(#FF0000, 0), linewidth = 1, title = 'Put/Call Ratio')
+plot(ind_jbd, color = color.new(#3700ff, 0), linewidth = 1, title = 'Junk Bond Demand')
+plot(ind_mv, color = color.new(#f70bf7, 0), linewidth = 1, title = 'Market Volatility')
+
+hline(25, color = color.black, linestyle = hline.style_dotted, linewidth = 2)
+hline(75, color = color.black, linestyle = hline.style_dotted, linewidth = 2)
