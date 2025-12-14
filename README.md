@@ -2,8 +2,6 @@
 
 This repository provides an overview of two key risk indicators for the U.S. equity market: the **CBOE Volatility Index (VIX)** and the **CNN Fear & Greed Index**. The content is based on an analytical report describing their calculation, interpretation, and practical application.
 
----
-
 ##  Fear & Greed Index (CNN)
 
 The **CNN Fear & Greed Index** measures market sentiment on a scale from 0 (extreme fear) to 100 (extreme greed). It is composed of 7 equally weighted indicators:
@@ -31,8 +29,6 @@ This implementation allows:
 - **Flexible visualization** and integration with other TradingView tools
 - **Real-time customization** of indicator parameters
 
----
-
 ##  CBOE Volatility Index (VIX)
 
 The **VIX**, often called the "fear gauge," is a real-time market index that represents the market's expectation of 30-day forward-looking volatility of the S&P 500. It is derived from the implied volatilities of a wide range of S&P 500 index options (both puts and calls), focusing on out-of-the-money (OTM) contracts.
@@ -44,8 +40,6 @@ Rather than using historical price movements, the VIX calculates **implied volat
 3.  Interpolating between the two expirations to derive a single, precise 30-day expected volatility measure.
 4.  Expressing the result as an annualized percentage.
 
----
-
 ##  VIX vs. S&P 500 Correlation
 
 The VIX exhibits a **strong negative correlation** with the S&P 500, historically around **-0.71** over 20 years. During market downturns, uncertainty rises, leading to:
@@ -54,8 +48,6 @@ The VIX exhibits a **strong negative correlation** with the S&P 500, historicall
 - Elevated implied volatility (VIX rises)
 
 This relationship is especially pronounced in equities, where volatility tends to spike during declines, unlike in commodities where volatility can rise in both bullish and bearish markets.
-
----
 
 ##  Intermarket Analysis Context
 
@@ -66,10 +58,8 @@ Intermarket analysis studies relationships between asset classes (equities, bond
 
 Understanding these dynamics helps contextualize movements in the VIX and Fear & Greed Index.
 
----
-
 ## Author
 
 **Mirko Piazzalunga**
-Obsidian Financial Research
+Obsidian 
 
