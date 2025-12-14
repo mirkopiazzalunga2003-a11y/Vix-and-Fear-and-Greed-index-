@@ -61,5 +61,5 @@ Understanding these dynamics helps contextualize movements in the VIX and Fear &
 ## Author
 
 **Mirko Piazzalunga**
-Obsidian 
+
 
